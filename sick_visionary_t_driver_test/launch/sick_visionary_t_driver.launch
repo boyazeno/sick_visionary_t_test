@@ -1,0 +1,13 @@
+<!-- Entry point for using OpenNI devices -->
+<launch>
+
+  <arg name="camera" default="sick_visionary_t_driver" />
+  <arg name="device_ip" default="141.3.80.137"/>
+  <arg name="frame_id" default="camera" />
+
+  <node pkg="sick_visionary_t_driver_test" type="sick_visionary_t_driver_test_node" name="$(arg camera)" output="screen" >
+    <param name="remote_device_ip" value="$(arg device_ip)" />
+    <param name="frame_id" value="$(arg frame_id)" />
+  </node>
+
+</launch>

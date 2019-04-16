@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <xacro:macro name="sick_visionary_t" params="parent *origin has_holder holder_tilt">
+
+        <xacro:if value="${has_holder}">
+
+            <joint name="visionary_t_holder_joint" type="fixed">
+                <xacro:insert_block name="origin" />
+                <parent link="${parent}"/>
+                <child link="visionary_t_holder_link" />
+            </joint>
+
+            <link name="visionary_t_holder_link">
+    <!--            <xacro:default_inertial/>
+                <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                    <mesh filename="package://iirob_description/environments/meshes/r3_cell/table.dae" />
+                    </geometry>
+                </visual>
+                <collision>
+                    <origin xyz="0 0 0.005" rpy="0 0 0" />
+                    <geometry>
+                        <mesh filename="package://iirob_description/environments/meshes/r3_cell/table.stl" scale="0.001 0.001 0.001" />
+                    </geometry>
+                </collision> -->
+            </link>
+
+            <joint name="visionary_t_holder_camera_joint" type="fixed">
+                <origin xyz="0 0 0.1" rpy="0 ${holder_tilt} 0" />
+                <parent link="visionary_t_holder_link"/>
+                <child link="visionary_t_camera_link" />
+            </joint>
+
+        </xacro:if>
+
+        <xacro:unless value="${has_holder}">
+
+            <joint name="visionary_t_holder_joint" type="fixed">
+                <xacro:insert_block name="origin" />
+                <parent link="${parent}"/>
+                <child link="visionary_t_camera_link" />
+            </joint>
+
+        </xacro:unless>
+
+        <link name="visionary_t_camera_link">
+        </link>
+
+        <joint name="visionary_t_camera_sensor_joint" type="fixed">
+            <!-- y=34.5 mm -->
+            <origin xyz="0 0 0.042" rpy="${pi/2} 0 ${pi/2}" />
+            <parent link="visionary_t_camera_link"/>
+            <child link="visionary_t_sensor" />
+        </joint>
+
+        <link name="visionary_t_sensor">
+        </link>
+
+  </xacro:macro>
+
+</robot>
+
+
+
+
+
+
